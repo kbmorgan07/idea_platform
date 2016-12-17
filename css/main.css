@@ -1,0 +1,118 @@
+root {
+    display: block;
+}
+body{
+    font-size: 1.2em;
+}
+
+/* LISTページ */
+#list{
+    border: 1px solid #666;
+    font-size: 100%;
+}
+#list td {
+    border-top: 1px solid #666;
+}
+
+/* MENU */
+#menu td{
+    text-align: center;
+    margin-bottom: 20px;
+    width: 170px;
+    height: 40px;
+    background-color: #000;
+    color: #FFF;
+    font-size: 20px;
+}
+#menu a{
+    color: #FFF;
+}
+#menu a:hover{
+    color: #f60;
+}
+#menu a:active{
+    color: #fff;
+}
+
+/* 詳細ページ */
+#select_one{
+    width:900px;
+}
+#select_one td{
+    border: 1px solid #555;
+}
+
+.ltitle{
+    width:200px;
+    text-align: left;
+    background-color: #ccc;
+    font-weight: bold;
+}
+.rtitle{
+    width:700px;
+    text-align: left;
+    background-color: #fff;
+}
+
+.c_btn{
+    text-align: center;
+}
+
+.test{
+  /*background: linear-gradient(-135deg,#404040,#666666);*/
+  background:#1582BB;
+  height:80px;
+}
+
+
+.header_box{
+  height:50%
+}
+
+.test_text{
+  color:white;
+  padding-right:20px;
+  font-size:25px;
+  font-family: 'Exo 2', sans-serif;
+  width:100%;
+}
+
+.header_left{
+  float:left;
+  width:500px
+}
+
+.header_right{
+  margin-left:1100px;
+}
+
+.box_check{
+  margin-left:20px;
+  padding:0;
+  margin-bottom:30px;
+  margin-top:10px;
+}
+
+
+h3{
+  margin-left:15px;
+}
+
+h4{
+  margin-left:20px
+}
+
+.body_wrapper{
+  padding-left:10px;
+}
+
+.edit_box{
+  text-align:right;
+}
+
+.comment_box{
+  background-color: #eeeeee;
+  margin-bottom:20px;
+  border-radius: 10px;
+  width:85%;
+}
