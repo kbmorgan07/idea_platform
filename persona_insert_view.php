@@ -2,28 +2,28 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>課題登録</title>
+  <title>アイデア登録</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
   <style>div{padding: 10px;font-size:16px;}</style>
   <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
+  <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
 </head>
 <body>
 
 <!-- Head[Start] -->
-<header>
-<div class="test">
-    <div class="header_box">
-      <div class="header_left">
-        <a class="test_text" href="persona_insert_view.php">Problem</a>
-        <a class="test_text" href="vote_list_view.php">Problem List</a>
-      </div>
+<header class="test">
+  <div class="header_box">
+      <a class="test_text" href="persona_insert_view.php">アイデア入力</a>
+      <a class="test_text" href="vote_list_view.php">案件一覧</a>
+      <a class="test_text" href="dashboard_view.php">Dashbord</a>
+  </div>
 
-      <div class="header_right">
-      <a class="test_text" href="logout.php">logout</a>
-      </div>
-    </div>
-</div>
+  <div class="header_right">
+    <?=$user_name?>さんログイン中
+    <br>
+    <a href="logout.php">Logout</a>
+  </div>
 </header>
 
 <!-- Head[End] -->
@@ -63,7 +63,9 @@
               <input type="checkbox" name="location[]" value="九州・沖縄">九州・沖縄
             </div>
 
-          <h3>Psychography</h3>
+
+<!-- 項目が出来上がるまで一旦コメントアウト -->
+          <!-- <h3>Psychography</h3>
             <h4>対象エリア</h4>
             <div class="box_check">
               <input type="checkbox" name="psy[]" value="北海道">北海道
@@ -72,7 +74,7 @@
               <input type="checkbox" name="psy[]" value="関西">関西
               <input type="checkbox" name="psy[]" value="中国・四国">中国・四国
               <input type="checkbox" name="psy[]" value="九州・沖縄">九州・沖縄
-            </div>
+            </div> -->
 
           </div>
 
@@ -83,15 +85,10 @@
           <div class="body_wrapper">
             <h2>Solution</h2><label><textArea name="solution" rows="4" cols="40"></textArea></label><br>
           </div>
-
-         <input type="submit" value="送信">
+          <input type="submit" name="name" value="送信">
         </fieldset>
       </div>
     </form>
-
-
 <!-- Main[End] -->
-
-
 </body>
 </html>

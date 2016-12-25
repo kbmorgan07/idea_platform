@@ -13,7 +13,7 @@ if (isset($_COOKIE[session_name()])) { //session_name()は、セッションID�
 //サーバ側での、セッションIDの破棄
 session_destroy();
 
-//処理後、index.phpへリダイレクト
+//処理後、リダイレクト
 header("Location: login.php");
 exit();
 

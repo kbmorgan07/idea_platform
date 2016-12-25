@@ -1,45 +1,24 @@
 <?php
-
 session_start();
 include("functions.php");
 
 $user_name = $_SESSION["user_name"];
-$sex = $_SESSION["sex"];
-$age = $_SESSION["age"];
-$location = $_SESSION["location"];
+$user_id = $_SESSION["user_id"];
 $user_password = $_SESSION["user_password"];
+$age = $_SESSION["age"];
+$sex = $_SESSION["sex"];
 
 loginCheck();
 
 //1.  DB接続します
 $pdo = db_connect();
 
-//POST送信されたデータを$keywdへ
-$keywd =$_POST["keywd"];
+//２．データ登録SQL作成
 
-//キーワードが入力されているときはwhere以下を組み立てる
-if (strlen($keywd)>0){
-	//受け取ったキーワードの全角スペースを半角スペースに変換する
-	$keywd2 = str_replace("　", " ", $keywd);
-
-	//キーワードを空白で分割する
-	$array = explode(" ",$keywd2);
-
-	//分割された個々のキーワードをSQLの条件where句に反映する
-	$where = "";
-
-	for($i = 0; $i <count($array);$i++){
-		$where .= "(problem LIKE '%$array[$i]%')";
-
-		if ($i <count($array) -1){
-			$where .= " AND ";
-		}
-	}
-}
-
-$stmt = $pdo->prepare("SELECT * FROM innovation_tool WHERE sex LIKE '%$sex%' AND age LIKE '%$age%' AND $where");
+$stmt = $pdo->prepare("SELECT *,
+        count(*) AS cnt FROM vote_table RIGHT JOIN innovation_tool ON vote_table.vt_id = innovation_tool.id
+        WHERE innovation_tool.user_id='".$user_id."' GROUP BY innovation_tool.id ORDER BY cnt DESC");
 $status = $stmt->execute();
-
 
 $view="";
 if($status==false){
@@ -49,7 +28,6 @@ if($status==false){
 }else{
   // personaデータの数だけ自動でループしてくれる
   while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
-
     $view .="<div class='box'>";
     $view .="課題".":　".$result["problem"]."<br>";
     $view .="解決策".":　".$result["solution"];
@@ -81,31 +59,19 @@ if($status==false){
       }
     }
 
-    if(isset($result["psy"])){
-      $psyAry = explode(',',$result["psy"]);
-      foreach ($psyAry as $value  ){
-        if($value){
-          $view .='<li>' . $value . "</li>";
-        }
-      }
-    }
-
     $view .="</ul>";
     $view .='<div class="sub_box">';
-    $view .='<a href="mypage.php?id='.$result["id"].'">';
-    $view .='[コメントする]';
+    $view .='<a href="dashboard_detail_view.php?id='.$result["id"].'">';
+    $view .='[結果を見る]';
     $view .='</a>';
-    $view .='　';
-    $view .='<form class="" action="vote_act.php?id='.$result["id"].'" method="post">';
-    $view .='<input type="hidden" name="vt_id" value="'.$result["id"].'">';
-    $view .='<input type="hidden" name="vt_name" value="'.$user_name.'">';
-    $view .='<input type="submit" value="投票する" >';
-    $view .='</form>';
+    $view .='<p>'.'イイね数：';
+    $view .=$result["cnt"];
+    $view .='</p>';
     $view .="</div>";
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -148,6 +114,13 @@ if($status==false){
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
+<div class="container">
+<div class="sort">
+  <div class="sort_box vote_sort"><a href="dashboard_view.php">人気順へ並び替える</a></div>
+  <div class="sort_box comment_sort"><a href="dashboard_comment_sort.php">コメントが多い順へ並び替える</a></div>
+</div>
+</div>
+
 <div>
     <div class="container jumbotron"><?=$view?></div>
 </div>

@@ -62,11 +62,13 @@ body{
   /*background: linear-gradient(-135deg,#404040,#666666);*/
   background:#1582BB;
   height:80px;
+  width:100%;
+  display:flex;
 }
 
 
 .header_box{
-  height:50%
+  padding-top:20px;
 }
 
 .test_text{
@@ -77,18 +79,9 @@ body{
   width:100%;
 }
 
-.header_left{
-  float:left;
-  width:500px
-}
-
-.header_right{
-  margin-left:1100px;
-}
 
 .box_check{
   margin-left:20px;
-  padding:0;
   margin-bottom:30px;
   margin-top:10px;
 }
@@ -103,7 +96,7 @@ h4{
 }
 
 .body_wrapper{
-  padding-left:10px;
+  padding:0;
 }
 
 .edit_box{
@@ -115,4 +108,90 @@ h4{
   margin-bottom:20px;
   border-radius: 10px;
   width:85%;
+}
+
+
+
+.sort_box{
+  height:50px;
+  width:220px;
+  flex-direction: row;
+}
+
+.vote_sort{
+  padding-top:10px;
+}
+
+.comment_sort{
+  padding-top:10px;
+}
+
+
+
+.sort_box a{
+  color:#000;
+}
+
+.sort_box a:hover{
+  color:red;
+}
+
+.sort{
+  display: flex;
+}
+
+
+
+.comment_sort a{
+  color:#000;
+}
+
+
+.sum_sort a{
+  color: #00AAD8;
+}
+
+.box{
+  width:100%;
+  display: inline-block;
+  word-wrap: break-word;
+  padding-bottom: 10px;
+  background: #eeeeee;
+  margin-bottom: 10px;
+}
+
+.sub_box{
+    text-align:right;
+    border-bottom:1px solid #000;
+    margin-bottom:20px;
+    padding-right:10px;
+  }
+
+.serch_box{
+  right:0;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+li{
+   display: inline-block;
+   padding: 6px;
+   background: #ccc;
+   border-radius: 4px;
+   margin-right: 4px;
+}
+
+.header_right{
+  color:white;
+  padding-top:20px;
+  margin-left:auto;
+  padding-right:20px;
+}
+
+.header_right a{
+  color:white;
+}
+
+.jumbotron p{
+  padding-left:10px;
 }

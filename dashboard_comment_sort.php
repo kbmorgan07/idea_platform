@@ -1,24 +1,24 @@
 <?php
 session_start();
 include("functions.php");
+
 $user_name = $_SESSION["user_name"];
 $user_id = $_SESSION["user_id"];
 $user_password = $_SESSION["user_password"];
 $age = $_SESSION["age"];
 $sex = $_SESSION["sex"];
 
-
-
 loginCheck();
 
 //1.  DB接続します
 $pdo = db_connect();
 
-//２．SQL作成
+//２．データ登録SQL作成
 
-  $stmt = $pdo->prepare("SELECT * FROM innovation_tool WHERE sex LIKE '%$sex%' AND age LIKE '%$age%'");
+  $stmt = $pdo->prepare("SELECT innovation_tool.id, innovation_tool.problem, innovation_tool.solution, innovation_tool.age, innovation_tool.sex,innovation_tool.location,innovation_tool.user_id, count(*) AS cnt FROM comment_table
+RIGHT JOIN innovation_tool ON comment_table.list_id = innovation_tool.id
+WHERE innovation_tool.user_id='".$user_id."' GROUP BY innovation_tool.id ORDER BY cnt DESC");
   $status = $stmt->execute();
-
 
   $view="";
   if($status==false){
@@ -26,7 +26,7 @@ $pdo = db_connect();
     $error = $stmt->errorInfo();
     exit("ErrorQuery:".$error[2]);
   }else{
-    // personaデータの数だけ自動でループ
+    // personaデータの数だけ自動でループしてくれる
     while( $result = $stmt->fetch(PDO::FETCH_ASSOC)){
       $view .="<div class='box'>";
       $view .="課題".":　".$result["problem"]."<br>";
@@ -61,19 +61,15 @@ $pdo = db_connect();
 
       $view .="</ul>";
       $view .='<div class="sub_box">';
-      $view .='<a href="mypage.php?id='.$result["id"].'">';
-      $view .='[アンケートに応える]';
+      $view .='<a href="dashboard_detail_view.php?id='.$result["id"].'">';
+      $view .='[結果を見る]';
       $view .='</a>';
-      $view .='　';
-      $view .='<form class="" action="vote_act.php?id='.$result["id"].'" method="post">';
-      $view .='<input type="hidden" name="vt_id" value="'.$result["id"].'">';
-      $view .='<input type="hidden" name="vt_name" value="'.$user_name.'">';
-      $view .='<input type="submit" value="イイね！" >';
-      $view .='</form>';
+      $view .='<p>'.'コメント数：';
+      $view .=$result["cnt"];
+      $view .='</p>';
       $view .="</div>";
       }
   }
-
 ?>
 
 
@@ -83,10 +79,11 @@ $pdo = db_connect();
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>アイデア一覧表示</title>
+<title>ユーザー一覧表示</title>
 <link rel="stylesheet" href="css/range.css">
 <link rel="stylesheet" href="css/main.css">
 <link href="css/bootstrap.min.css" rel="stylesheet">
+
 
 </head>
 <body id="main">
@@ -118,6 +115,14 @@ $pdo = db_connect();
 <!-- Head[End] -->
 
 <!-- Main[Start] -->
+
+<div class="container">
+<div class="sort">
+  <div class="sort_box vote_sort"><a href="dashboard_view.php">人気順へ並び替える</a></div>
+  <div class="sort_box comment_sort"><a href="dashboard_comment_sort.php">コメントが多い順へ並び替える</a></div>
+</div>
+</div>
+
 <div>
     <div class="container jumbotron"><?=$view?></div>
 </div>

@@ -39,7 +39,7 @@ if($status==false){
   exit("QueryError:".$error[2]);
 
 }else{
-  //５．mypage.phpへリダイレクト
+  //５.リダイレクト
   header("Location: vote_list_view.php");
   exit;
 

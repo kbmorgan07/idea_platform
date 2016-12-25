@@ -11,14 +11,7 @@
 <body>
 
 <!-- Head[Start] -->
-<header>
-  <nav class="">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="persona_list_view.php">ログイン</a>
-      </div>
-    </div>
-  </nav>
+<header class="test">
 </header>
 <!-- Head[End] -->
 
@@ -26,7 +19,7 @@
 <form method="post" action="login_act.php">
   <div class="jumbotron">
    <fieldset>
-    <legend>フリーアンケート</legend>
+    <legend>IDEAプラットフォーム</legend>
      <label>ID：<input type="text" name="lid"></label><br>
      <label>PW：<input type="text" name="lpw"></label><br>
      <input type="submit" value="Log In">

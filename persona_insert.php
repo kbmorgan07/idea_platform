@@ -4,13 +4,10 @@ session_start();
 include("functions.php");
 loginCheck();
 
-
-
 if(
   !isset($_POST["age"]) || $_POST["age"]=="" ||
   !isset($_POST["sex"]) || $_POST["sex"]=="" ||
   !isset($_POST["location"]) || $_POST["location"]=="" ||
-  !isset($_POST["psy"]) || $_POST["psy"]=="" ||
   !isset($_POST["problem"]) || $_POST["problem"]=="" ||
   !isset($_POST["solution"]) || $_POST["solution"]==""
 
@@ -19,7 +16,9 @@ if(
 }
 
 
-//1. POSTデータ取得
+//1. データ取得
+$user_id = $_SESSION["user_id"];
+
 $age = $_POST["age"];
 $str ="";
 foreach($age as $value){
@@ -38,13 +37,6 @@ foreach($location as $value){
   $str3 .= $value.",";
 }
 
-$psy = $_POST["psy"];
-$str4 ="";
-foreach($psy as $value){
-  $str4 .= $value.",";
-}
-
-
 $problem = $_POST["problem"];
 $solution = $_POST["solution"];
 
@@ -52,17 +44,18 @@ $solution = $_POST["solution"];
 $pdo = db_connect();
 
 //３．データ登録SQL作成
-$sql = "INSERT INTO innovation_tool(id, age, sex, location, psy, problem, solution,
-indate )VALUES(NULL, :a1, :a2, :a3, :a4, :a5, :a6, sysdate())";
+$sql = "INSERT INTO innovation_tool(id,age, sex, location, problem, solution, user_id,
+indate )VALUES(NULL, :a1, :a2, :a3, :a5, :a6, :a7, sysdate())";
 
 $stmt = $pdo->prepare($sql);
 
 $stmt->bindValue(':a1', $str, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
 $stmt->bindValue(':a2', $str2, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
 $stmt->bindValue(':a3', $str3, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
-$stmt->bindValue(':a4', $str4, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
+// $stmt->bindValue(':a4', $str4, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
 $stmt->bindValue(':a5', $problem, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
 $stmt->bindValue(':a6', $solution, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
+$stmt->bindValue(':a7', $user_id, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
 $status = $stmt->execute();
 
 //４．データ登録処理後
@@ -72,7 +65,7 @@ if($status==false){
   exit("QueryError:".$error[2]);
 
 }else{
-  //５．persona_insert_view.phpへリダイレクト
+  //５．リダイレクト
   header("Location: persona_insert_view.php");
   exit;
 

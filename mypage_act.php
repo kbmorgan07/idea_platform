@@ -17,7 +17,6 @@ $cm_text = $_POST["cm_text"];
 $cm_name = $_POST["cm_name"];
 $list_id = $_POST["list_id"];
 
-
 //2.  DB接続します
 $pdo = db_connect();
 
@@ -39,7 +38,7 @@ if($status==false){
   exit("QueryError:".$error[2]);
 
 }else{
-  //５．mypage.phpへリダイレクト
+  //５．リダイレクト
   header("Location: mypage.php?id=$list_id");
   exit;
 
